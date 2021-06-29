@@ -714,3 +714,8 @@ export async function starMessage(req, res) {
     return res.status(500).json({ status: 'error', message: 'Error on  start message' });
   }
 }
+
+export async function rocketChat(req, res) {
+    console.log(req.body);
+    res.status(200).json({ status: 'error', message: 'Error on  start message' });
+}
