@@ -1433,11 +1433,11 @@
     "@types/node" "*"
 
 "@wppconnect-team/wppconnect@^1.8.0":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@wppconnect-team/wppconnect/-/wppconnect-1.8.3.tgz#b55f4345c951049bb364840b9e8a7cc940487b6b"
-  integrity sha512-grV6F+b19ri9Cjs21nZ3ZPNHf4VqpVX4rLIfXs5J2tnu3c1BaRhI3v18kPIM1/1fbFOs/WHxB/Vgdv89fj61/A==
+  version "1.8.9"
+  resolved "https://registry.yarnpkg.com/@wppconnect-team/wppconnect/-/wppconnect-1.8.9.tgz#ce33b508956a026eec64db96bdb250a7f6dd54b3"
+  integrity sha512-5ImyuTcGGt6lL7JYdTGJxx8v2Ourid/lhAlK9K6CnPejg4Q3xUWHFLEjfzTkqm3OQtbqQhkIxsCsTuOF8NgKHw==
   dependencies:
-    "@wppconnect/wa-version" "^1.1.1"
+    "@wppconnect/wa-version" "^1.1.3"
     atob "^2.1.2"
     axios "^0.21.1"
     boxen "^5.0.0"
@@ -1463,10 +1463,10 @@
   optionalDependencies:
     fsevents "^2.3.1"
 
-"@wppconnect/wa-version@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@wppconnect/wa-version/-/wa-version-1.1.1.tgz#f2d593c6982290093708363e3fda65567f3ae971"
-  integrity sha512-88YLOUh7qQ6udZ8LfayBrELUsE1arp118bS8Uf+RSLSjN1FevfRPrjrP0ehIkHBPZEe8JhcVi5ECJd7/kq/daA==
+"@wppconnect/wa-version@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@wppconnect/wa-version/-/wa-version-1.1.3.tgz#69d255a62c20df4b2b57af8ad0eae4978e24c2fd"
+  integrity sha512-PLk/v3bDUe1M7yU3jUSgm0DTXvDXo/C4YniGCHAN2tp0kWZgRy9jnK4DAGdEZbf5wJRLfa0TvsJGsyqXGdrgyA==
   dependencies:
     node-fetch "^2.6.1"
     semver "^7.3.5"
