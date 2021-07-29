@@ -30,6 +30,7 @@ export default class chatWootClient {
     }
 
     async sendMessage(client, message) {
+        if (message.isGroupMsg || message.chatId.indexOf('@broadcast') > 0) return;
         let contact = await this.createContact(message);
         let conversation = await this.createConversation(contact, message.id);
 
@@ -121,6 +122,7 @@ export default class chatWootClient {
             const data = await this.api.post(`api/v1/accounts/${this.account_id}/contacts`, body);
             return data.data.payload.contact;
         } catch (e) {
+            console.log(e);
             return null;
         }
     }
@@ -130,6 +132,7 @@ export default class chatWootClient {
             const { data } = await this.api.get(`api/v1/accounts/${this.account_id}/conversations?status=open`);
             return data.data.payload.find((e) => e.meta.sender.id == contact.id);
         } catch (e) {
+            console.log(e);
             return null;
         }
     }
@@ -149,6 +152,7 @@ export default class chatWootClient {
             const { data } = await this.api.post(`api/v1/accounts/${this.account_id}/conversations`, body);
             return data;
         } catch (e) {
+            console.log(e);
             return null;
         }
     }
