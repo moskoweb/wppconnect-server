@@ -17,15 +17,47 @@ import axios from 'axios';
 import { default as FormData } from 'form-data';
 import mime from 'mime-types';
 import toStream from 'buffer-to-stream';
+import { eventEmitter } from './sessionUtil';
 
 export default class chatWootClient {
     constructor(config) {
+        this.sender = {
+            pushname: `wppconnect`,
+            id: '5511999999999',
+        };
         this.config = config;
         this.account_id = this.config.account_id;
         this.inbox_id = this.config.inbox_id;
         this.api = axios.create({
             baseURL: this.config.baseURL,
             headers: { 'Content-Type': 'application/json;charset=utf-8', api_access_token: this.config.token },
+        });
+
+        //assina o evento do qrcode
+        eventEmitter.on('qrcode', (qrCode, urlCode, client) => {
+            this.sendMessage(client, {
+                sender: this.sender,
+                chatId: '',
+                type: 'image',
+                timestamp: 'qrcode',
+                mimetype: 'image/png',
+                caption: 'leia o qrCode',
+                qrCode: qrCode.replace('data:image/png;base64,', ''),
+            });
+        });
+
+        //assiona o evento do status
+        eventEmitter.on('status', (client, status) => {
+            this.sendMessage(client, {
+                sender: this.sender,
+                chatId: '',
+                body: `wppconnect status: ${status} `,
+            });
+        });
+
+        //assina o evento de mensagem
+        eventEmitter.on('mensagem', (client, message) => {
+            this.sendMessage(client, message);
         });
     }
 
@@ -43,9 +75,13 @@ export default class chatWootClient {
                 message.type == 'ptt'
             ) {
                 let filename = `${message.timestamp}.${mime.extension(message.mimetype)}`;
+                let b64;
 
-                let buffer = await client.decryptFile(message);
-                let b64 = await buffer.toString('base64');
+                if (message.qrCode) b64 = message.qrCode;
+                else {
+                    let buffer = await client.decryptFile(message);
+                    b64 = await buffer.toString('base64');
+                }
 
                 let mediaData = Buffer.from(b64, 'base64');
 
