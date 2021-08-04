@@ -21,7 +21,6 @@ function returnSucess(res, session, group, data, message = 'Information retrieve
     response: {
       message: message,
       group: group,
-      session: session,
       data: data,
     },
   });
@@ -33,7 +32,6 @@ function returnError(req, res, session, error, messsage = 'Error retrieving info
     status: 'error',
     response: {
       message: messsage,
-      session: session,
       log: error,
     },
   });
@@ -72,11 +70,9 @@ export async function createGroup(req, res) {
 
   try {
     let result;
-    let inviteLink;
     let infoGroup = [];
 
     result = await req.client.createGroup(name, contactToArray(participants));
-    inviteLink = await req.client.getGroupInviteLink(result.gid.user);
 
     infoGroup.push({
       id: result.gid.user,
@@ -84,7 +80,6 @@ export async function createGroup(req, res) {
       participants: result.participants.map((user) => {
         return { user: Object.keys(user)[0] };
       }),
-      inviteLink: inviteLink,
     });
 
     returnSucess(res, req.session, result.gid.user, infoGroup, 'Group(s) created successfully');
