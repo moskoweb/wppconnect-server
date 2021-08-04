@@ -17,6 +17,7 @@ import fs from 'fs';
 import { download } from './sessionController';
 import { contactToArray, unlinkAsync } from '../util/functions';
 import mime from 'mime-types';
+import { clientsArray } from '../util/sessionUtil';
 
 function returnSucess(res, session, phone, data) {
   res.status(201).json({
@@ -715,35 +716,40 @@ export async function starMessage(req, res) {
   }
 }
 
-export async function rocketChat(req, res) {
-    const session = req.body.visitor.phone;
-    const client = clientsArray[session[0].phoneNumber.split('--')[1]];
-    try {
-        if (await client.isConnected()) {
-            const { type, phone = req.body.visitor.username, message = req.body.messages[0].msg } = req.body;
+export async function chatWoot(req, res) {
+  const { session } = req.params;
+  const client = clientsArray[session];
+  try {
+    if (await client.isConnected()) {
+      const event = req.body.event;
 
-            const contato = contactToArray(phone, false);
+      if (event == 'conversation_status_changed') {
+        return res.status(200).json({ status: 'success', message: 'Success on receive chatwoot' });
+      }
 
-            if (type === 'Message') {
-                if (req.body.messages[0].fileUpload) {
-                    await client.sendFile(
-                        `${contato}`,
-                        req.body.messages[0].fileUpload.publicFilePath,
-                        req.body.messages[0].file.name,
-                        message
-                    );
-                } else {
-                    await client.sendText(contato, message);
-                }
-            } else if (type === 'LivechatSession') {
-                await client.sendText(contato, 'Atendimento Finalizado');
-            } else if (type === 'LivechatSessionTaken') {
-                await client.sendText(contato, `Você está está sendo antedido(a) por ${req.body.agent.name}`);
-            }
+      const {
+        message_type,
+        phone = req.body.conversation.meta.sender.phone_number,
+        message = req.body.conversation.messages[0],
+      } = req.body;
 
-            return res.status(200).json({ status: 'success', message: 'Success on  receive rocketChat' });
+      if (event != 'message_created' && message_type != 'outgoing') return res.status(200);
+      for (const contato of contactToArray(phone, false)) {
+        if (message_type == 'outgoing') {
+          if (message.attachments) {
+            let base_url = `${client.config.chatWoot.baseURL}/${message.attachments[0].data_url.substring(
+              message.attachments[0].data_url.indexOf('/rails/') + 1
+            )}`;
+            await client.sendFile(`${contato}`, base_url, 'file', message.content);
+          } else {
+            await client.sendText(contato, message.content);
+          }
         }
-    } catch (e) {
-        return res.status(400).json({ status: 'error', message: 'Error on  receive chatwoot' });
+      }
+      return res.status(200).json({ status: 'success', message: 'Success on  receive chatwoot' });
     }
+  } catch (e) {
+    console.log(e);
+    return res.status(400).json({ status: 'error', message: 'Error on  receive chatwoot' });
+  }
 }
