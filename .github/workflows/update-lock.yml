@@ -1,31 +1,21 @@
-name: release
+name: update-lock
 
 on:
-  workflow_dispatch:
-    inputs:
-      increment:
-        description: 'Tipo de incremento: patch, minor, major ou pre*'
-        required: true
-        default: 'patch'
+  push:
+    branches:
+      - 'main'
 
 jobs:
-  release:
+  update-lock:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.PERSONAL_TOKEN }}
-
-      - name: Setup GIT
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Setup Node
         uses: actions/setup-node@v2.4.0
         with:
-          node-version: 14.x
+          node-version: 12.x
 
       - name: Get yarn cache directory
         id: yarn-cache
@@ -43,5 +33,9 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
-      - name: Release
-        run: 'npx release-it --increment ${{ github.event.inputs.increment }}'
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'chore: Updated yarn.lock'
+          file_pattern: yarn.lock
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
