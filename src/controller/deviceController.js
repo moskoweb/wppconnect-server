@@ -176,21 +176,6 @@ export async function getMessageById(req, res) {
   }
 }
 
-export async function changePrivacyGroup(req, res) {
-  const { phone, status } = req.body;
-
-  try {
-    for (const contato of contactToArray(phone)) {
-      await req.client.setMessagesAdminsOnly(`${contato}@g.us`, status === 'true');
-    }
-
-    return res.status(200).json({ status: 'success', response: { message: 'Group privacy changed successfully' } });
-  } catch (e) {
-    req.logger.error(e);
-    return res.status(500).json({ status: 'error', message: 'Error changing group privacy' });
-  }
-}
-
 export async function getBatteryLevel(req, res) {
   try {
     let response = await req.client.getBatteryLevel();

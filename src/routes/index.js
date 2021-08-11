@@ -128,7 +128,7 @@ routes.post(
   statusConnection,
   GroupController.setGroupProfilePic
 );
-routes.post('/api/:session/change-privacy-group', verifyToken, statusConnection, DeviceController.changePrivacyGroup);
+routes.post('/api/:session/change-privacy-group', verifyToken, statusConnection, GroupController.changePrivacyGroup);
 
 // Chat
 routes.get('/api/:session/all-chats', verifyToken, statusConnection, DeviceController.getAllChats);
