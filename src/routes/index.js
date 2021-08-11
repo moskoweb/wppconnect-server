@@ -74,6 +74,7 @@ routes.post('/api/:session/send-link-preview', verifyToken, statusConnection, Me
 routes.post('/api/:session/send-location', verifyToken, statusConnection, MessageController.sendLocation);
 routes.post('/api/:session/send-mentioned', verifyToken, statusConnection, MessageController.sendMentioned);
 routes.post('/api/:session/send-contact', verifyToken, statusConnection, MessageController.sendContactVcard);
+routes.post('/api/:session/send-buttons', verifyToken, statusConnection, MessageController.sendButtons);
 
 // Group
 routes.get('/api/:session/all-broadcast-list', verifyToken, statusConnection, GroupController.getAllBroadcastList);
