@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { contactToArray, groupToArray } from '../util/functions';
+import { contactToArray, groupToArray, unlinkAsync } from '../util/functions';
 
 function returnSucess(res, session, group, data, message = 'Information retrieved successfully.') {
   res.status(200).json({
@@ -352,5 +352,25 @@ export async function setMessagesAdminsOnly(req, res) {
   } catch (e) {
     req.logger.error(e);
     return res.status(500).json({ status: 'error', message: 'Error on set messages admins only' });
+  }
+}
+
+export async function setGroupProfilePic(req, res) {
+  const { phone } = req.body;
+
+  if (!req.file) return res.status(400).json({ status: 'error', message: 'File parameter is required!' });
+
+  try {
+    const { path: pathFile } = req.file;
+
+    let result;
+
+    result = await req.client.setProfilePic(pathFile, phone);
+
+    await unlinkAsync(pathFile);
+
+    returnSucess(res, req.session, phone, result, 'Group profile photo successfully changed');
+  } catch (e) {
+    returnError(req, res, req.session, 'Error changing group photo');
   }
 }
