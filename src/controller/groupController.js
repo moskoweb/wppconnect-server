@@ -15,7 +15,7 @@
  */
 import { contactToArray, groupToArray, unlinkAsync } from '../util/functions';
 
-function returnSucess(res, session, group, data, message = 'Information retrieved successfully.') {
+function returnSucess(res, group, data, message = 'Information retrieved successfully.') {
   res.status(200).json({
     status: 'success',
     response: {
@@ -26,7 +26,7 @@ function returnSucess(res, session, group, data, message = 'Information retrieve
   });
 }
 
-function returnError(req, res, session, error, messsage = 'Error retrieving information') {
+function returnError(req, res, error, messsage = 'Error retrieving information') {
   req.logger.error(error);
   res.status(400).json({
     status: 'error',
@@ -40,16 +40,16 @@ function returnError(req, res, session, error, messsage = 'Error retrieving info
 export async function joinGroupByCode(req, res) {
   const { inviteCode } = req.body;
 
-  if (!inviteCode) return returnError(req, res, req.session, 'Invitation Code is required');
+  if (!inviteCode) return returnError(req, res, 'Invitation Code is required');
 
   try {
     let result;
 
     result = await req.client.joinGroup(inviteCode);
 
-    returnSucess(res, req.session, inviteCode, result, 'The informed contact(s) entered the group successfully');
+    returnSucess(res, inviteCode, result, 'The informed contact(s) entered the group successfully');
   } catch (error) {
-    returnError(req, res, req.session, 'The informed contact(s) did not join the group successfully');
+    returnError(req, res, 'The informed contact(s) did not join the group successfully');
   }
 }
 
@@ -59,9 +59,9 @@ export async function getAllGroups(req, res) {
 
     result = await req.client.getAllGroups();
 
-    returnSucess(res, req.session, 'all-groups', result);
+    returnSucess(res, 'all-groups', result);
   } catch (e) {
-    returnError(req, res, req.session, 'Error fetching groups');
+    returnError(req, res, 'Error fetching groups');
   }
 }
 
@@ -82,9 +82,9 @@ export async function createGroup(req, res) {
       }),
     });
 
-    returnSucess(res, req.session, result.gid.user, infoGroup, 'Group(s) created successfully');
+    returnSucess(res, result.gid.user, infoGroup, 'Group(s) created successfully');
   } catch (e) {
-    returnError(req, res, req.session, 'Error creating group');
+    returnError(req, res, 'Error creating group');
   }
 }
 
@@ -213,9 +213,9 @@ export async function getGroupAdmins(req, res) {
 
     result = await req.client.getGroupAdmins(groupId);
 
-    returnSucess(res, req.session, groupId, result);
+    returnSucess(res, groupId, result);
   } catch (e) {
-    returnError(req, res, req.session, 'Error retrieving group admin(s)');
+    returnError(req, res, 'Error retrieving group admin(s)');
   }
 }
 
@@ -226,9 +226,9 @@ export async function getGroupInviteLink(req, res) {
 
     result = await req.client.getGroupInviteLink(groupId);
 
-    returnSucess(res, req.session, groupId, result);
+    returnSucess(res, groupId, result);
   } catch (e) {
-    returnError(req, res, req.session, 'Error on get group invite link');
+    returnError(req, res, 'Error on get group invite link');
   }
 }
 
@@ -369,8 +369,8 @@ export async function setGroupProfilePic(req, res) {
 
     await unlinkAsync(pathFile);
 
-    returnSucess(res, req.session, phone, result, 'Group profile photo successfully changed');
+    returnSucess(res, phone, result, 'Group profile photo successfully changed');
   } catch (e) {
-    returnError(req, res, req.session, 'Error changing group photo');
+    returnError(req, res, 'Error changing group photo');
   }
 }
