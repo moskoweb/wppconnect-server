@@ -15,7 +15,7 @@
  */
 import fs from 'fs';
 import { download } from './sessionController';
-import { contactToArray, groupToArray, unlinkAsync } from '../util/functions';
+import { contactToArray, unlinkAsync } from '../util/functions';
 import mime from 'mime-types';
 import { clientsArray } from '../util/sessionUtil';
 
@@ -443,6 +443,7 @@ export async function loadEarlierMessages(req, res) {
     return res.status(401).json({ status: 'error', response: 'Error on open list' });
   }
 }
+
 export async function sendMentioned(req, res) {
   const { phone, message, mentioned, isGroup = false } = req.body;
 
@@ -456,6 +457,20 @@ export async function sendMentioned(req, res) {
   } catch (error) {
     req.logger.error(error);
     return res.status(400).json({ status: 'error', message: 'Error on send message mentioned' });
+  }
+}
+
+export async function sendContactVcard(req, res) {
+  const { phone, contactsId, name = null, isGroup = false } = req.body;
+  try {
+    let response;
+    for (const contato of contactToArray(phone, isGroup)) {
+      response = await req.client.sendContactVcard(`${contato}`, contactsId, name);
+    }
+
+    return res.status(200).json({ status: 'success', response: response });
+    } catch (error) {
+    return res.status(500).json({ status: 'error', message: 'Error on send contact vcard' });
   }
 }
 

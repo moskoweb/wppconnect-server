@@ -363,6 +363,20 @@ export async function setMessagesAdminsOnly(req, res) {
   }
 }
 
+export async function changePrivacyGroup(req, res) {
+  const { groupId, status } = req.body;
+
+  try {
+    for (const group of contactToArray(groupId)) {
+      await req.client.setMessagesAdminsOnly(group, status === 'true');
+    }
+
+    returnSucess(res, phone, result, 'Group privacy changed successfully');
+  } catch (e) {
+    returnError(req, res, 'Error changing group privacy');
+  }
+}
+
 export async function setGroupProfilePic(req, res) {
   const { phone } = req.body;
 
@@ -380,20 +394,5 @@ export async function setGroupProfilePic(req, res) {
     returnSucess(res, phone, result, 'Group profile photo successfully changed');
   } catch (e) {
     returnError(req, res, 'Error changing group photo');
-  }
-}
-
-export async function changePrivacyGroup(req, res) {
-  const { groupId, status } = req.body;
-
-  try {
-    for (const group of contactToArray(groupId)) {
-      await req.client.setMessagesAdminsOnly(group, status === 'true');
-    }
-
-    return res.status(200).json({ status: 'success', response: { message: 'Group privacy changed successfully' } });
-  } catch (e) {
-    req.logger.error(e);
-    return res.status(500).json({ status: 'error', message: 'Error changing group privacy' });
   }
 }
