@@ -367,11 +367,12 @@ export async function changePrivacyGroup(req, res) {
   const { groupId, status } = req.body;
 
   try {
+    let result;
     for (const group of contactToArray(groupId)) {
-      await req.client.setMessagesAdminsOnly(group, status === 'true');
+      result = await req.client.setMessagesAdminsOnly(group, status === 'true');
     }
 
-    returnSucess(res, phone, result, 'Group privacy changed successfully');
+    returnSucess(res, groupId, result, 'Group privacy changed successfully');
   } catch (e) {
     returnError(req, res, 'Error changing group privacy');
   }

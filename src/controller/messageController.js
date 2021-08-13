@@ -228,25 +228,6 @@ export async function sendButtons(req, res) {
   }
 }
 
-export async function sendContactVcard(req, res) {
-  const session = req.session;
-  const { phone, contactsId, name = null, isGroup = false } = req.body;
-
-  try {
-    let result;
-
-    for (const contact of contactToArray(phone, isGroup)) {
-      result = await req.client.sendContactVcard(`${contact}`, contactsId, name);
-    }
-
-    if (!result) return returnError(req, res, session, 'Error sending message');
-
-    returnSucess(res, session, phone, result);
-  } catch (error) {
-    returnError(req, res, session, error);
-  }
-}
-
 export async function sendStatusText(req, res) {
   const { message } = req.body;
 
@@ -297,22 +278,6 @@ export async function sendMentioned(req, res) {
 
     returnSucess(res, phone, results);
   } catch (error) {
-    returnError(req, res, error);
-  }
-}
-
-export async function sendMentioned(req, res) {
-  const { phone, message, mentioned } = req.body;
-
-  try {
-    let response;
-    for (const contato of phone) {
-      response = await req.client.sendMentioned(`${contato}`, message, mentioned);
-    }
-
-    return res.status(201).json({ status: 'success', response: response });
-  } catch (error) {
-    req.logger.error(error);
-    return res.status(500).json({ status: 'error', message: 'Error on send message mentioned' });
+    returnError(req, res, error, 'Error on send message mentioned');
   }
 }
