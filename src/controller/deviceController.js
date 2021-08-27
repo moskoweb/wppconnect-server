@@ -170,7 +170,7 @@ export async function getMessageById(req, res) {
 
     result = await req.client.getMessageById(messageId);
 
-    if(! result.chatId) { returnError(req, res, session, error, 'Message not found') }
+    if(result.chatId === undefined) { returnError(req, res, session, error, 'Message not found') }
 
     returnSucess(res, session, result.chatId.user, result);
   } catch (error) {
