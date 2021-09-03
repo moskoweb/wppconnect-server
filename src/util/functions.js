@@ -46,6 +46,16 @@ export function contactToArray(number, isGroup) {
   return localArr;
 }
 
+export function getGroupId(group) {
+  group = group.split('@')[0];
+
+  if (group !== '') {
+    group = group + '@g.us';
+  }
+
+  return group;
+}
+
 export function groupToArray(group) {
   let localArr = [];
   if (Array.isArray(group)) {

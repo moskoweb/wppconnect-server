@@ -229,7 +229,7 @@ export async function getGroupInviteLink(req, res) {
   try {
     let response;
 
-    response = await req.client.getGroupInviteLink(groupId);
+    response = await req.client.getGroupInviteLink(getGroupId(groupId));
 
     returnSucess(res, groupId, response);
   } catch (e) {
@@ -243,7 +243,7 @@ export async function revokeGroupInviteLink(req, res) {
   try {
     let response = {};
 
-    response = await req.client.revokeGroupInviteLink(groupId);
+    response = await req.client.revokeGroupInviteLink(getGroupId(groupId));
 
     returnSucess(res, groupId, response);
   } catch (e) {
