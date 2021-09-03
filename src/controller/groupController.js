@@ -75,7 +75,7 @@ export async function createGroup(req, res) {
 
     group = await req.client.createGroup(name, contactToArray(participants));
 
-    await sleep(200);
+    await sleep(500);
 
     link = await req.client.getGroupInviteLink(getGroupId(group.gid.user));
 
