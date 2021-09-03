@@ -47,7 +47,7 @@ routes.post('/api/:session/logout-session', verifyToken, statusConnection, Sessi
 routes.post('/api/:session/close-session', verifyToken, SessionController.closeSession);
 routes.post('/api/:session/subscribe-presence', verifyToken, SessionController.subscribePresence);
 routes.post('/api/:session/download-media', verifyToken, statusConnection, SessionController.downloadMediaByMessage);
-routes.post('/api/:session/kill-service-workier', verifyToken, statusConnection, SessionController.killServiceWorker);
+routes.post('/api/:session/kill-service-worker', verifyToken, statusConnection, SessionController.killServiceWorker);
 routes.post('/api/:session/restart-service', verifyToken, statusConnection, SessionController.restartService);
 
 // Messages
