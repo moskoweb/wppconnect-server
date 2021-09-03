@@ -225,16 +225,13 @@ export async function getGroupAdmins(req, res) {
 
 export async function getGroupInviteLink(req, res) {
   const { groupId } = req.params;
+
   try {
     let response;
-    let arrayGroups = {};
 
-    for (const group of groupToArray(groupId)) {
-      response = await req.client.getGroupInviteLink(group);
-      arrayGroups.push(response);
-    }
+    response = await req.client.getGroupInviteLink(groupId);
 
-    returnSucess(res, groupId, arrayGroups);
+    returnSucess(res, groupId, response);
   } catch (e) {
     returnError(req, res, 'Error on get group invite link');
   }
@@ -243,20 +240,14 @@ export async function getGroupInviteLink(req, res) {
 export async function revokeGroupInviteLink(req, res) {
   const { groupId } = req.params;
 
-  let response = {};
-
   try {
-    for (const group of groupToArray(groupId)) {
-      response = await req.client.revokeGroupInviteLink(group);
-    }
+    let response = {};
 
-    return res.status(200).json({
-      status: 'Success',
-      response: response,
-    });
+    response = await req.client.revokeGroupInviteLink(groupId);
+
+    returnSucess(res, groupId, response);
   } catch (e) {
-    req.logger.error(e);
-    return res.status(400).json('Error on revoke group invite link');
+    returnError(req, res, 'Error on revoke group invite link');
   }
 }
 
