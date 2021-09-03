@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { contactToArray, groupToArray, unlinkAsync } from '../util/functions';
+import { contactToArray, groupToArray, unlinkAsync, getGroupId, sleep } from '../util/functions';
 
 function returnSucess(res, group, data, message = 'Information retrieved successfully.') {
   res.status(200).json({
@@ -69,20 +69,26 @@ export async function createGroup(req, res) {
   const { participants, name } = req.body;
 
   try {
-    let result;
+    let group;
+    let link;
     let infoGroup = [];
 
-    result = await req.client.createGroup(name, contactToArray(participants));
+    group = await req.client.createGroup(name, contactToArray(participants));
+
+    await sleep(200);
+
+    link = await req.client.getGroupInviteLink(getGroupId(group.gid.user));
 
     infoGroup.push({
-      id: result.gid.user,
+      id: group.gid.user,
       name: name,
-      participants: result.participants.map((user) => {
+      link: link,
+      participants: group.participants.map((user) => {
         return { user: Object.keys(user)[0] };
       }),
     });
 
-    returnSucess(res, result.gid.user, infoGroup, 'Group(s) created successfully');
+    returnSucess(res, group.gid.user, infoGroup, 'Group(s) created successfully');
   } catch (e) {
     returnError(req, res, 'Error creating group');
   }

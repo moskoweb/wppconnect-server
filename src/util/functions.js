@@ -241,3 +241,7 @@ export function getIPAddress() {
 }
 
 export let unlinkAsync = promisify(fs.unlink);
+
+export function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
