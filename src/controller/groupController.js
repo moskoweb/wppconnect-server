@@ -332,9 +332,7 @@ export async function setGroupSubject(req, res) {
   let response = {};
 
   try {
-    for (const group of groupToArray(groupId)) {
-      response = await req.client.setGroupSubject(group, title);
-    }
+      response = await req.client.setGroupSubject(getGroupId(groupId), title);
 
     return res.status(200).json({ status: 'success', response: response });
   } catch (e) {
