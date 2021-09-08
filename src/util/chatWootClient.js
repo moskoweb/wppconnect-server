@@ -182,7 +182,7 @@ export default class chatWootClient {
     var conversation = await this.findConversation(contact);
     if (conversation) return conversation;
 
-    if (!contact.id) {
+    if (!contact || !contact.id) {
       return null;
     }
 
