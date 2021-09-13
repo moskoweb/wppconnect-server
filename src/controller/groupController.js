@@ -134,18 +134,11 @@ export async function addParticipant(req, res) {
     let response = {};
     let arrayGroups = [];
 
-    for (const group of groupToArray(groupId)) {
-      response = await req.client.addParticipant(group, contactToArray(phone));
-      arrayGroups.push(response);
-    }
+    response = await req.client.addParticipant(getGroupId(groupId), contactToArray(phone));
 
-    return res.status(201).json({
-      status: 'success',
-      response: { message: 'Participant(s) added successfully', participants: phone, groups: arrayGroups },
-    });
+    returnSucess(res, groupId, response);
   } catch (e) {
-    req.logger.error(e);
-    return res.status(500).json({ status: 'error', message: 'Error adding participant(s)' });
+    returnError(req, res, 'Error adding participant(s)');
   }
 }
 
@@ -175,19 +168,11 @@ export async function promoteParticipant(req, res) {
   const { groupId, phone } = req.body;
 
   try {
-    let arrayGroups = [];
-    for (const group of groupToArray(groupId)) {
-      await req.client.promoteParticipant(group, contactToArray(phone));
-      arrayGroups.push(group);
-    }
+    response = await req.client.promoteParticipant(getGroupId(groupId), contactToArray(phone));
 
-    return res.status(201).json({
-      status: 'success',
-      response: { message: 'Successful promoted participant(s)', participants: phone, groups: arrayGroups },
-    });
+    returnSucess(res, groupId, response);
   } catch (e) {
-    req.logger.error(e);
-    return res.status(500).json({ status: 'error', message: 'Error promoting participant(s)' });
+    returnError(req, res, 'Error promoting participant(s)');
   }
 }
 
