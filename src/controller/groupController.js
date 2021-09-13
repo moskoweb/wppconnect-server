@@ -131,8 +131,7 @@ export async function addParticipant(req, res) {
   const { groupId, phone } = req.body;
 
   try {
-    let response = {};
-    let arrayGroups = [];
+    let response;
 
     response = await req.client.addParticipant(getGroupId(groupId), contactToArray(phone));
 
@@ -168,6 +167,8 @@ export async function promoteParticipant(req, res) {
   const { groupId, phone } = req.body;
 
   try {
+    let response;
+
     response = await req.client.promoteParticipant(getGroupId(groupId), contactToArray(phone));
 
     returnSucess(res, groupId, response);
