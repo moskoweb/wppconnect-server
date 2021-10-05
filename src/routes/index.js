@@ -20,12 +20,14 @@ import * as GroupController from '../controller/groupController';
 import * as DeviceController from '../controller/deviceController';
 import * as SessionController from '../controller/sessionController';
 import * as OrderController from '../controller/orderController';
+import * as HealthCheck from '../middleware/healthCheck';
 import verifyToken from '../middleware/auth';
 import statusConnection from '../middleware/statusConnection';
 import multer from 'multer';
 import uploadConfig from '../config/upload';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from '../swagger.json';
+import { sendButtonsList } from '../controller/messageController';
 
 const upload = multer(uploadConfig);
 const routes = new Router();
@@ -75,6 +77,7 @@ routes.post('/api/:session/send-location', verifyToken, statusConnection, Messag
 routes.post('/api/:session/send-mentioned', verifyToken, statusConnection, MessageController.sendMentioned);
 routes.post('/api/:session/send-contact', verifyToken, statusConnection, MessageController.sendContactVcard);
 routes.post('/api/:session/send-buttons', verifyToken, statusConnection, MessageController.sendButtons);
+routes.post('/api/:session/send-buttons-list', verifyToken, statusConnection, MessageController.sendButtonsList);
 
 // Group
 routes.get('/api/:session/all-broadcast-list', verifyToken, statusConnection, GroupController.getAllBroadcastList);
@@ -229,5 +232,9 @@ routes.post('/api/:session/contact-vcard', verifyToken, statusConnection, Messag
 // Api Doc
 routes.use('/api-docs', swaggerUi.serve);
 routes.get('/api-docs', swaggerUi.setup(swaggerDocument));
+
+//k8s
+routes.get('/healthz', HealthCheck.healthz);
+routes.get('/unhealthy', HealthCheck.unhealthy);
 
 export default routes;
