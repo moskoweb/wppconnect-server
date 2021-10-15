@@ -75,14 +75,9 @@ export async function createGroup(req, res) {
 
     group = await req.client.createGroup(name, contactToArray(participants));
 
-    await sleep(500);
-
-    link = await req.client.getGroupInviteLink(getGroupId(group.gid.user));
-
     infoGroup.push({
       id: group.gid.user,
       name: name,
-      link: link,
       participants: group.participants.map((user) => {
         return { user: Object.keys(user)[0] };
       }),
