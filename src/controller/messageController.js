@@ -15,44 +15,27 @@
  */
 import { unlinkAsync } from '../util/functions';
 
-async function returnError(req, res, error, message = 'Error sending message.') {
+function returnError(req, res, error) {
   req.logger.error(error);
-  res.status(400).json({
-    status: 'error',
-    response: {
-      message: message,
-      log: error,
-    },
-  });
+  res.status(500).json({ status: 'Error', message: 'Erro ao enviar a mensagem.' });
 }
 
-async function returnSucess(res, phone, data, message = 'Message sent successfully') {
-  res.status(201).json({
-    status: 'success',
-    response: {
-      message: message,
-      contact: phone,
-      data: data,
-    },
-    mapper: 'return',
-  });
+async function returnSucess(res, data) {
+  res.status(201).json({ status: 'success', response: data, mapper: 'return' });
 }
 
 export async function sendMessage(req, res) {
   const { phone, message } = req.body;
 
   try {
-    let result;
-
-    for (const contact of phone) {
-      result = await req.client.sendText(contact, message);
+    let results = [];
+    for (const contato of phone) {
+      results.push(await req.client.sendText(contato, message));
     }
 
-    if (!result) return returnError(req, res, 'Error sending message');
-
-    req.io.emit('mensagem-enviada', { message: message, to: phone });
-
-    returnSucess(res, phone, result);
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    req.io.emit('mensagem-enviada', results);
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -69,17 +52,14 @@ export async function sendImage(req, res) {
   const pathFile = path || req.file.path;
 
   try {
-    let result;
-
-    for (const contact of phone) {
-      result = await req.client.sendImage(contact, pathFile, filename, caption);
+    let results = [];
+    for (const contato of phone) {
+      results.push(await req.client.sendImage(contato, pathFile, filename, caption));
     }
 
-    if (!result) return returnError(req, res, 'Error sending message');
-
-    if (req.file.path) await unlinkAsync(pathFile);
-
-    returnSucess(res, phone, result);
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    if (req.file) await unlinkAsync(pathFile);
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -97,16 +77,13 @@ export async function sendFile(req, res) {
 
   try {
     let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.sendFile(contact, pathFile, filename, message));
+    for (const contato of phone) {
+      results.push(await req.client.sendFile(contato, pathFile, filename, message));
     }
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
+    if (results.length === 0) return res.status(400).json('Error sending message');
     if (req.file) await unlinkAsync(pathFile);
-
-    returnSucess(res, phone, results);
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -115,36 +92,48 @@ export async function sendFile(req, res) {
 export async function sendFile64(req, res) {
   const { base64, phone, filename = 'file', message } = req.body;
 
-  if (!base64) return returnError(req, res, 'The base64 of the file was not informed');
+  if (!base64) return res.status(401).send({ message: 'The base64 of the file was not informed' });
 
   try {
     let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.sendFileFromBase64(contact, base64, filename, message));
+    for (const contato of phone) {
+      results.push(await req.client.sendFileFromBase64(contato, base64, filename, message));
     }
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
-    returnSucess(res, phone, results);
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
 }
 
 export async function sendVoice(req, res) {
+  const { phone, path, filename = 'Voice Audio', message, quotedMessageId } = req.body;
+
+  try {
+    let results = [];
+    for (const contato of phone) {
+      results.push(await req.client.sendPtt(contato, path, filename, message, quotedMessageId));
+    }
+
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    returnSucess(res, results);
+  } catch (error) {
+    returnError(req, res, error);
+  }
+}
+
+export async function sendVoice64(req, res) {
   const { phone, url: base64Ptt } = req.body;
 
   try {
     let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.sendPttFromBase64(contact, base64Ptt, 'Voice Audio'));
+    for (const contato of phone) {
+      results.push(await req.client.sendPttFromBase64(contato, base64Ptt, 'Voice Audio'));
     }
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
-    returnSucess(res, phone, results);
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -155,14 +144,12 @@ export async function sendLinkPreview(req, res) {
 
   try {
     let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.sendLinkPreview(`${contact}`, url, caption));
+    for (const contato of phone) {
+      results.push(await req.client.sendLinkPreview(`${contato}`, url, caption));
     }
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
-    returnSucess(res, phone, results);
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -173,31 +160,12 @@ export async function sendLocation(req, res) {
 
   try {
     let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.sendLocation(contact, lat, lng, title));
+    for (const contato of phone) {
+      results.push(await req.client.sendLocation(contato, lat, lng, title));
     }
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
-    returnSucess(res, phone, results);
-  } catch (error) {
-    returnError(req, res, error);
-  }
-}
-export async function sendContactVcard(req, res) {
-  const { phone, contactsId, name = null } = req.body;
-
-  try {
-    let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.sendContactVcard(contact, contactsId, name));
-    }
-
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
-    returnSucess(res, phone, results);
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -225,6 +193,25 @@ export async function sendButtons(req, res) {
     returnSucess(res, phone, results);
   } catch (error) {
     returnError(req, res, error);
+  }
+}
+
+export async function sendContactVcard(req, res) {
+  const session = req.session;
+  const { phone, contactsId, name = null, isGroup = false } = req.body;
+
+  try {
+    let result;
+
+    for (const contact of contactToArray(phone, isGroup)) {
+      result = await req.client.sendContactVcard(`${contact}`, contactsId, name);
+    }
+
+    if (!result) return returnError(req, res, session, 'Error sending message');
+
+    returnSucess(res, session, phone, result);
+  } catch (error) {
+    returnError(req, res, session, error);
   }
 }
 
@@ -266,12 +253,10 @@ export async function sendStatusText(req, res) {
 
   try {
     let results = [];
-
     results.push(await req.client.sendText('status@broadcast', message));
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
-    returnSucess(res, '', results);
+    if (results.length === 0) return res.status(400).json('Error sending message');
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -282,16 +267,13 @@ export async function replyMessage(req, res) {
 
   try {
     let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.reply(contact, message, messageId));
+    for (const contato of phone) {
+      results.push(await req.client.reply(contato, message, messageId));
     }
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
+    if (results.length === 0) return res.status(400).json('Error sending message');
     req.io.emit('mensagem-enviada', { message: message, to: phone });
-
-    returnSucess(res, phone, results);
+    returnSucess(res, results);
   } catch (error) {
     returnError(req, res, error);
   }
@@ -301,17 +283,15 @@ export async function sendMentioned(req, res) {
   const { phone, message, mentioned } = req.body;
 
   try {
-    let results = [];
-
-    for (const contact of phone) {
-      results.push(await req.client.sendMentioned(contact, message, mentioned));
+    let response;
+    for (const contato of phone) {
+      response = await req.client.sendMentioned(`${contato}`, message, mentioned);
     }
 
-    if (results.length === 0) return returnError(req, res, 'Error sending message');
-
-    returnSucess(res, phone, results);
+    return res.status(201).json({ status: 'success', response: response });
   } catch (error) {
-    returnError(req, res, error, 'Error on send message mentioned');
+    req.logger.error(error);
+    return res.status(500).json({ status: 'error', message: 'Error on send message mentioned' });
   }
 }
 
