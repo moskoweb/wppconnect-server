@@ -1074,7 +1074,7 @@
     "@commitlint/rules" "^16.2.1"
     "@commitlint/types" "^16.2.1"
 
-"@commitlint/load@>6.1.1", "@commitlint/load@^16.2.1", "@commitlint/load@^16.2.3":
+"@commitlint/load@>6.1.1", "@commitlint/load@^16.2.3":
   version "16.2.3"
   resolved "https://registry.yarnpkg.com/@commitlint/load/-/load-16.2.3.tgz#7b2e85af25a6f736f080ba08e7165738cedf8c8f"
   integrity sha512-Hb4OUlMnBUK6UxJEZ/VJ5k0LocIS7PtEMbRXEAA7eSpOgORIFexC4K/RaRpVd5UTtu3M0ST3ddPPijF9rdW6nw==
@@ -5084,9 +5084,9 @@ mongodb@4.3.1:
     saslprep "^1.0.3"
 
 mongoose@^6.0.0:
-  version "6.2.6"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.2.6.tgz#b30ae524b4ab9eeb33ed3988552d344f7b4b1962"
-  integrity sha512-OkPM1y7Ed9+Pa2/18mxegcD0OOe/aCXTQvOEyEn/MzVdaRsVSc+zE6myOS4LkWWi30c2tl4fpdJJvgC/MgXiww==
+  version "6.2.7"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-6.2.7.tgz#d8ea2fce4c19200d316c3ac4a8377f3af4fb4450"
+  integrity sha512-yqTZcM3u0+aLzl6cirtXy6vr24kt+kFyTucCQ3pyncvO1jGn/M1R09qkC/v54QoPXeVJdpcuS5eQWn0NLlDvKA==
   dependencies:
     bson "^4.2.2"
     kareem "2.3.4"
