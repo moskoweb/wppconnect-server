@@ -1668,9 +1668,9 @@
     "@types/node" "*"
 
 "@wppconnect-team/wppconnect@^1.10.3":
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/@wppconnect-team/wppconnect/-/wppconnect-1.14.0.tgz#e807cb1c42ba5e36aa5880e6a84b2fc1dc6ef338"
-  integrity sha512-Qvw3BYdXQ04QXoFjV52OHdbaX/NFxbM/CiHoBuDT7uBJzMAUVgQuBMDVvC0t1YnqTctcOYKH1hsrjv3aMSpBEQ==
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/@wppconnect-team/wppconnect/-/wppconnect-1.14.1.tgz#ea6b91fb378112599da5f4785af5faada4578c86"
+  integrity sha512-gG/4/+ExFbrJpsCUJc8Qs69vu/z84wnMmJyBERuJvqg8gwU3njRLe5eDijoio/xnvGVJ2vtcJfQIyOQFfTLbkg==
   dependencies:
     "@wppconnect/wa-js" "^2.6.0"
     "@wppconnect/wa-version" "^1.1.89"
