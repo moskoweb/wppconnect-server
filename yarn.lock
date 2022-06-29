@@ -177,7 +177,7 @@
   dependencies:
     "@babel/types" "^7.18.6"
 
-"@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.16.7", "@babel/helper-module-imports@^7.18.6":
+"@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.18.6":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.18.6.tgz#1e3ebdbbd08aad1437b428c50204db13c5a3ca6e"
   integrity sha512-0NFvs3VkuSYbFi1x2Vd6tKrywq+z/cLeYC/RJNFrIX/30Bf5aiGYbtvGXolEktzJH8o5E5KJ3tT+nkxuuZFVlA==
@@ -956,7 +956,7 @@
     debug "^4.1.0"
     globals "^11.1.0"
 
-"@babel/types@^7.16.7", "@babel/types@^7.18.6", "@babel/types@^7.4.4":
+"@babel/types@^7.18.6", "@babel/types@^7.4.4":
   version "7.18.6"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.18.6.tgz#5d781dd10a3f0c9f1f931bd19de5eb26ec31acf0"
   integrity sha512-NdBNzPDwed30fZdDQtVR7ZgaO4UKjuaQFH9VArS+HMnurlOY0JWN+4ROlu/iapMFwjRQU4pOG4StZfDmulEwGA==
@@ -1911,9 +1911,9 @@ atob@^2.1.2:
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
 aws-sdk@^2.903.0:
-  version "2.1163.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1163.0.tgz#2c24b82987c6a842d9bec8a0d61a13cb36b26bba"
-  integrity sha512-vSCPTNduqxv5cGe3al/0V6dxPr+hpDRR7B9AADtVp+iHS+HdLCeNZbGhT66VfFjXVXXEfbAuF4ME9fYSc5/mOg==
+  version "2.1164.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.1164.0.tgz#050ce644ed9993582bd02151bf3ac9d9ebc143f5"
+  integrity sha512-q/M9E68WabF22G8d8lFgo3NH+9RooYswSY9VG6zqN16C19RRm2sGThp8Sxtz/WUK98BAsxSnkLW1ksmy3BsP7Q==
   dependencies:
     buffer "4.9.2"
     events "1.1.1"
