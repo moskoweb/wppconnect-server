@@ -1584,13 +1584,6 @@
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
 
-"@types/puppeteer@*":
-  version "5.4.4"
-  resolved "https://registry.yarnpkg.com/@types/puppeteer/-/puppeteer-5.4.4.tgz#e92abeccc4f46207c3e1b38934a1246be080ccd0"
-  integrity sha512-3Nau+qi69CN55VwZb0ATtdUAlYlqOOQ3OfQfq0Hqgc4JMFXiQT/XInlwQ9g6LbicDslE6loIFsXFklGh5XmI6Q==
-  dependencies:
-    "@types/node" "*"
-
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/responselike/-/responselike-1.0.0.tgz#251f4fe7d154d2bad125abe1b429b23afd262e29"
@@ -1619,12 +1612,12 @@
     "@types/node" "*"
 
 "@wppconnect-team/wppconnect@^1.10.3":
-  version "1.14.4"
-  resolved "https://registry.yarnpkg.com/@wppconnect-team/wppconnect/-/wppconnect-1.14.4.tgz#a8d069185a8f04a5eee2b15d011ea9fbfb60b21e"
-  integrity sha512-z9urgyzeHGYTl6S+5MElglykT4PpxZny5yZ85GXkpwh0lfqfvZav0glDLqxmZ3H9aDoi/rOcLt8jmnRbHFr3mw==
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@wppconnect-team/wppconnect/-/wppconnect-1.15.0.tgz#a2dc055d03b39b488ed12fee95d8878c49509fcf"
+  integrity sha512-49nQiur/VrajzA7ax+0MXbKllpSF2O1xzO2N7+y+fVvQDzvmtjXgKC6/SPSiuDt2dc9+fqP3Onx44I19v3dVCQ==
   dependencies:
-    "@wppconnect/wa-js" "^2.7.3"
-    "@wppconnect/wa-version" "^1.1.97"
+    "@wppconnect/wa-js" "^2.8.1"
+    "@wppconnect/wa-version" "^1.1.104"
     atob "^2.1.2"
     axios "^0.27.2"
     boxen "^5.1.2"
@@ -1635,35 +1628,35 @@
     file-type "~16.5.3"
     futoin-hkdf "^1.5.1"
     latest-version "^5.1.0"
-    logform "^2.4.0"
+    logform "^2.4.2"
     lookpath "^1.2.2"
     mime-types "^2.1.35"
     puppeteer "*"
-    puppeteer-extra "^3.2.3"
-    puppeteer-extra-plugin-stealth "^2.9.0"
-    puppeteer-extra-plugin-user-data-dir "^2.3.1"
-    puppeteer-extra-plugin-user-preferences "^2.3.1"
+    puppeteer-extra "^3.3.4"
+    puppeteer-extra-plugin-stealth "^2.11.0"
+    puppeteer-extra-plugin-user-data-dir "^2.4.0"
+    puppeteer-extra-plugin-user-preferences "^2.4.0"
     qrcode-terminal "^0.12.0"
     reflect-metadata "^0.1.13"
     rimraf "^3.0.2"
     sanitize-filename "^1.6.3"
-    sharp "^0.30.6"
+    sharp "^0.30.7"
     tmp "^0.2.1"
     tree-kill "^1.2.2"
-    winston "^3.7.2"
-    ws "^8.8.0"
+    winston "^3.8.1"
+    ws "^8.8.1"
   optionalDependencies:
     fsevents "^2.3.2"
 
-"@wppconnect/wa-js@^2.7.3":
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/@wppconnect/wa-js/-/wa-js-2.7.3.tgz#e63903beb610d3c18ae204bd0c05c5b004aea277"
-  integrity sha512-7heyUngPO/GbzePTCRza2JMDSz/YC3dnokzrp9dQJpHOAa2a6nwgiro4ogPIrc+ddBflrQCv5kgeCySe2zmdXQ==
+"@wppconnect/wa-js@^2.8.1":
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/@wppconnect/wa-js/-/wa-js-2.8.2.tgz#b8792b5623145fdfaa2f51cbbbd44c2946a12902"
+  integrity sha512-9+bzSpk3c+PUMnrf1CS6RfgRx4YczkIdxxwOogi1VFhmBu+ajm5WqDWiri+McxMyIIrXOiN9vAh1pGfJxQ4LfA==
 
-"@wppconnect/wa-version@^1.1.97":
-  version "1.1.97"
-  resolved "https://registry.yarnpkg.com/@wppconnect/wa-version/-/wa-version-1.1.97.tgz#e94e2093d3feba755dac3e977efe944789bd0c4e"
-  integrity sha512-HIE0bQjPr08yiQdLaNzqWAFgcd95+j/6GZG/j1JQA+L+kvySg8c3OrLBv70/rncDO5FP5GqSWE5PxuRppJkciQ==
+"@wppconnect/wa-version@^1.1.104":
+  version "1.1.107"
+  resolved "https://registry.yarnpkg.com/@wppconnect/wa-version/-/wa-version-1.1.107.tgz#22b7886922e786b6a0207f59829e288d3e79ebda"
+  integrity sha512-vu3R5CT4aE1qj7VgYK7wtstPV8Qm6OAbcP8KUfY/ETiSgAfJz8zVJsmzNvUbCTgr2N6X9AMl3Zd9MBmsfuyozg==
   dependencies:
     node-fetch "^2.6.7"
     semver "^7.3.7"
@@ -5254,10 +5247,10 @@ log-symbols@^5.1.0:
     chalk "^5.0.0"
     is-unicode-supported "^1.1.0"
 
-logform@^2.3.2, logform@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/logform/-/logform-2.4.0.tgz#131651715a17d50f09c2a2c1a524ff1a4164bcfe"
-  integrity sha512-CPSJw4ftjf517EhXZGGvTHHkYobo7ZCc0kvwUoOYcjfR2UVrI66RHj8MCrfAdEitdmFqbu2BYdYs8FHHZSb6iw==
+logform@^2.3.2, logform@^2.4.0, logform@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/logform/-/logform-2.4.2.tgz#a617983ac0334d0c3b942c34945380062795b47c"
+  integrity sha512-W4c9himeAwXEdZ05dQNerhFz2XG80P9Oj0loPUMV23VC2it0orMHQhJm4hdnnor3rd1HsGf6a2lPwBM1zeXHGw==
   dependencies:
     "@colors/colors" "1.5.0"
     fecha "^4.2.0"
@@ -5821,7 +5814,7 @@ npm-run-path@^5.1.0:
   dependencies:
     path-key "^4.0.0"
 
-npmlog@^4.0.1, npmlog@^4.1.2:
+npmlog@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/npmlog/-/npmlog-4.1.2.tgz#08a7f2a8bf734604779a9efa4ad5cc717abb954b"
   integrity sha512-2uUqazuKlTaSI/dC8AzicUck7+IrEaOnN/e0jd3Xtt1KcGpwx30v50mL7oPyr/h9bL3E4aZccVwpwP+5W9Vjkg==
@@ -6297,10 +6290,10 @@ pkg-dir@^3.0.0:
   dependencies:
     find-up "^3.0.0"
 
-prebuild-install@^7.1.0:
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-7.1.0.tgz#991b6ac16c81591ba40a6d5de93fb33673ac1370"
-  integrity sha512-CNcMgI1xBypOyGqjp3wOc8AAo1nMhZS3Cwd3iHIxOdAUbb+YxdNuM4Z5iIrZ8RLvOsf3F3bl7b7xGq6DjQoNYA==
+prebuild-install@^7.1.1:
+  version "7.1.1"
+  resolved "https://registry.yarnpkg.com/prebuild-install/-/prebuild-install-7.1.1.tgz#de97d5b34a70a0c81334fd24641f2a1702352e45"
+  integrity sha512-jAXscXWMcCK8GgCoHOfIr0ODh5ai8mj63L2nWrjuAgXE6tDyYGnx4/8o/rCgU+B4JSyZBKbeZqzhtwtC3ovxjw==
   dependencies:
     detect-libc "^2.0.0"
     expand-template "^2.0.3"
@@ -6309,7 +6302,6 @@ prebuild-install@^7.1.0:
     mkdirp-classic "^0.5.3"
     napi-build-utils "^1.0.1"
     node-abi "^3.3.0"
-    npmlog "^4.0.1"
     pump "^3.0.0"
     rc "^1.2.7"
     simple-get "^4.0.0"
@@ -6451,50 +6443,50 @@ pupa@^3.1.0:
   dependencies:
     escape-goat "^4.0.0"
 
-puppeteer-extra-plugin-stealth@^2.9.0:
-  version "2.9.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.9.0.tgz#aa39f4469bf47343af4517efe9f97846228b3b01"
-  integrity sha512-erZ9lkIcOkfYmLPP2jv2AiqvNBFhQJinWJhcm40pqSjwJTsZXHsTARUyRCsBYEEBvNIs3Wz3E0zVlTRc4IJ6Hg==
+puppeteer-extra-plugin-stealth@^2.11.0:
+  version "2.11.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-stealth/-/puppeteer-extra-plugin-stealth-2.11.0.tgz#727cf1edcac98a9f05be609c880cf0383e214f84"
+  integrity sha512-BqckPV95MHP25quZgzBnZJD8S38ZYP4B3HJ3Kr/vibqxJxhK6L1VQ6jnu/JcFKV0wzCIQPrCiiavZnwE5u1C2A==
   dependencies:
     debug "^4.1.1"
-    puppeteer-extra-plugin "^3.2.0"
-    puppeteer-extra-plugin-user-preferences "^2.3.1"
+    puppeteer-extra-plugin "^3.2.2"
+    puppeteer-extra-plugin-user-preferences "^2.4.0"
 
-puppeteer-extra-plugin-user-data-dir@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-data-dir/-/puppeteer-extra-plugin-user-data-dir-2.3.1.tgz#1a8777b6383cf212de361497e94616ab29712a38"
-  integrity sha512-yhaYMaNFdfQ1LbA94ZElW1zU8rh+MFmO+GZA0gtQ8BXc+UZ6aRrWS9flIZvlXDzk+ZsXhCbTEohEwZ8lEDLRVA==
+puppeteer-extra-plugin-user-data-dir@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-data-dir/-/puppeteer-extra-plugin-user-data-dir-2.4.0.tgz#20e87582482b61e497abd96fec452f63bd2d9123"
+  integrity sha512-qrhYPTGIqzL2hpeJ5DXjf8xMy5rt1UvcqSgpGTTOUOjIMz1ROWnKHjBoE9fNBJ4+ToRZbP8MzIDXWlEk/e1zJA==
   dependencies:
     debug "^4.1.1"
     fs-extra "^10.0.0"
-    puppeteer-extra-plugin "^3.2.0"
+    puppeteer-extra-plugin "^3.2.2"
+    rimraf "^3.0.2"
 
-puppeteer-extra-plugin-user-preferences@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-preferences/-/puppeteer-extra-plugin-user-preferences-2.3.1.tgz#20faacd9e4cc00a52e8261604309e897aa569fa5"
-  integrity sha512-t/FyGQj2aqtHOROqL02z+k2kNQe0cjT0Hd9pG5FJ7x0JXx1722PhOuK7FeJLQMJ+BLl2YvCUgaWSC8Zohjts5A==
+puppeteer-extra-plugin-user-preferences@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin-user-preferences/-/puppeteer-extra-plugin-user-preferences-2.4.0.tgz#8b75bc39c3de9913e236ae1d982a24711d84ba6f"
+  integrity sha512-4XxMhMkJ+qqLsPY9ULF90qS9Bj1Qrwwgp1TY9zTdp1dJuy7QSgYE7xlyamq3cKrRuzg3QUOqygJo52sVeXSg5A==
   dependencies:
     debug "^4.1.1"
     deepmerge "^4.2.2"
-    puppeteer-extra-plugin "^3.2.0"
-    puppeteer-extra-plugin-user-data-dir "^2.3.1"
+    puppeteer-extra-plugin "^3.2.2"
+    puppeteer-extra-plugin-user-data-dir "^2.4.0"
 
-puppeteer-extra-plugin@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin/-/puppeteer-extra-plugin-3.2.0.tgz#f964e2a714d0f9c7a00b557c780ac28c6affd5e9"
-  integrity sha512-wbiw12USE3b+maMk/IMaroYsz7rusVI9G+ml6pCFCnFFh91Z9BAEiVzhCpOHuquVXEiCCsDTWhDUgvdNxQHOyw==
+puppeteer-extra-plugin@^3.2.2:
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra-plugin/-/puppeteer-extra-plugin-3.2.2.tgz#3c02c0a10f8eadf32e7debb7ee24105a53afc17b"
+  integrity sha512-0uatQxzuVn8yegbrEwSk03wvwpMB5jNs7uTTnermylLZzoT+1rmAQaJXwlS3+vADUbw6ELNgNEHC7Skm0RqHbQ==
   dependencies:
     "@types/debug" "^4.1.0"
     debug "^4.1.1"
     merge-deep "^3.0.1"
 
-puppeteer-extra@^3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/puppeteer-extra/-/puppeteer-extra-3.2.3.tgz#1b24ae12ab7c7660f81922c1065beb5887cc189e"
-  integrity sha512-CnSN9yIedbAbS8WmRybaDHJLf6goRk+VYM/kbH6i/+EMadCaAeh2O+1/mFUMN2LbkbDNAp2Vd/UwrTVCHjTxyg==
+puppeteer-extra@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/puppeteer-extra/-/puppeteer-extra-3.3.4.tgz#e0ecf021783d1112b6b0db20546d5022e632ed55"
+  integrity sha512-fN5pHvSMJ8d1o7Z8wLLTQOUBpORD2BcFn+KDs7QnkGZs9SV69hcUcce67vX4L4bNSEG3A0P6Osrv+vWNhhdm8w==
   dependencies:
     "@types/debug" "^4.1.0"
-    "@types/puppeteer" "*"
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
@@ -7109,15 +7101,15 @@ shallow-clone@^3.0.0:
   dependencies:
     kind-of "^6.0.2"
 
-sharp@^0.30.6:
-  version "0.30.6"
-  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.30.6.tgz#02264e9826b5f1577509f70bb627716099778873"
-  integrity sha512-lSdVxFxcndzcXggDrak6ozdGJgmIgES9YVZWtAFrwi+a/H5vModaf51TghBtMPw+71sLxUsTy2j+aB7qLIODQg==
+sharp@^0.30.7:
+  version "0.30.7"
+  resolved "https://registry.yarnpkg.com/sharp/-/sharp-0.30.7.tgz#7862bda98804fdd1f0d5659c85e3324b90d94c7c"
+  integrity sha512-G+MY2YW33jgflKPTXXptVO28HvNOo9G3j0MybYAHeEmby+QuD2U98dT6ueht9cv/XDqZspSpIhoSW+BAKJ7Hig==
   dependencies:
     color "^4.2.3"
     detect-libc "^2.0.1"
     node-addon-api "^5.0.0"
-    prebuild-install "^7.1.0"
+    prebuild-install "^7.1.1"
     semver "^7.3.7"
     simple-get "^4.0.1"
     tar-fs "^2.1.1"
@@ -8196,10 +8188,10 @@ winston-transport@^4.5.0:
     readable-stream "^3.6.0"
     triple-beam "^1.3.0"
 
-winston@^3.7.2:
-  version "3.7.2"
-  resolved "https://registry.yarnpkg.com/winston/-/winston-3.7.2.tgz#95b4eeddbec902b3db1424932ac634f887c400b1"
-  integrity sha512-QziIqtojHBoyzUOdQvQiar1DH0Xp9nF1A1y7NVy2DGEsz82SBDtOalS0ulTRGVT14xPX3WRWkCsdcJKqNflKng==
+winston@^3.8.1:
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/winston/-/winston-3.8.1.tgz#76f15b3478cde170b780234e0c4cf805c5a7fb57"
+  integrity sha512-r+6YAiCR4uI3N8eQNOg8k3P3PqwAm20cLKlzVD9E66Ch39+LZC+VH1UKf9JemQj2B3QoUHfKD7Poewn0Pr3Y1w==
   dependencies:
     "@dabh/diagnostics" "^2.0.2"
     async "^3.2.3"
@@ -8269,10 +8261,10 @@ ws@7.4.6:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
   integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
 
-ws@^8.8.0:
-  version "8.8.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.0.tgz#8e71c75e2f6348dbf8d78005107297056cb77769"
-  integrity sha512-JDAgSYQ1ksuwqfChJusw1LSJ8BizJ2e/vVu5Lxjq3YvNJNlROv1ui4i+c/kUUrPheBvQl4c5UbERhTwKa6QBJQ==
+ws@^8.8.1:
+  version "8.8.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.8.1.tgz#5dbad0feb7ade8ecc99b830c1d77c913d4955ff0"
+  integrity sha512-bGy2JzvzkPowEJV++hF07hAD6niYSr0JzBNo/J29WsB57A2r7Wlc1UFcTR9IzrPvuNVO4B8LGqF8qcpsVOhJCA==
 
 ws@~8.2.3:
   version "8.2.3"
