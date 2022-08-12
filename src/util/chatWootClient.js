@@ -37,22 +37,24 @@ export default class chatWootClient {
 
     //assina o evento do qrcode
     eventEmitter.on(`qrcode-${session}`, (qrCode, urlCode, client) => {
-      this.sendMessage(client, {
-        sender: this.sender,
-        chatId: '',
-        type: 'image',
-        timestamp: 'qrcode',
-        mimetype: 'image/png',
-        caption: 'leia o qrCode',
-        qrCode: qrCode.replace('data:image/png;base64,', ''),
-      });
+      setTimeout(async () => {
+        this.sendMessage(client, {
+          sender: this.sender,
+          chatId: this.mobile_number + '@c.us',
+          type: 'image',
+          timestamp: 'qrcode',
+          mimetype: 'image/png',
+          caption: 'leia o qrCode',
+          qrCode: qrCode.replace('data:image/png;base64,', ''),
+        });
+      }, 1000);
     });
 
     //assiona o evento do status
     eventEmitter.on(`status-${session}`, (client, status) => {
       this.sendMessage(client, {
         sender: this.sender,
-        chatId: '',
+        chatId: this.mobile_number + '@c.us',
         body: `wppconnect status: ${status} `,
       });
     });
@@ -66,7 +68,7 @@ export default class chatWootClient {
   async sendMessage(client, message) {
     if (message.isGroupMsg || message.chatId.indexOf('@broadcast') > 0) return;
     let contact = await this.createContact(message);
-    let conversation = await this.createConversation(contact, message.id);
+    let conversation = await this.createConversation(contact, message.chatId.split('@')[0]);
 
     try {
       if (
@@ -171,9 +173,9 @@ export default class chatWootClient {
   async findConversation(contact) {
     try {
       const { data } = await this.api.get(
-        `api/v1/accounts/${this.account_id}/conversations?inbox_id=${this.inbox_id}&status=open`
+        `api/v1/accounts/${this.account_id}/conversations?inbox_id=${this.inbox_id}&status=all`
       );
-      return data.data.payload.find((e) => e.meta.sender.id == contact.id);
+      return data.data.payload.find((e) => e.meta.sender.id == contact.id && e.status != 'resolved');
     } catch (e) {
       console.log(e);
       return null;

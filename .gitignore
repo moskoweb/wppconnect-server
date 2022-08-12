@@ -16,4 +16,4 @@
 *.png
 *.tgz
 /.idea
-*.DS_Store
+userDataDir

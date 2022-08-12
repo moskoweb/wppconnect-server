@@ -13,55 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { contactToArray, groupToArray, unlinkAsync, getGroupId, sleep } from '../util/functions';
+import { contactToArray, groupNameToArray, groupToArray } from '../util/functions';
 
-function returnSucess(res, group, data, message = 'Information retrieved successfully.') {
-  res.status(200).json({
-    status: 'success',
-    response: {
-      message: message,
-      group: group,
-      data: data,
-    },
-  });
-}
+export async function getAllGroups(req, res) {
+  try {
+    const response = await req.client.getAllGroups();
 
-function returnError(req, res, error, messsage = 'Error retrieving information') {
-  req.logger.error(error);
-  res.status(400).json({
-    status: 'error',
-    response: {
-      message: messsage,
-      log: error,
-    },
-  });
+    return res.status(200).json({ status: 'success', response: response });
+  } catch (e) {
+    req.logger.error(e);
+    res.status(500).json({ status: 'error', message: 'Error fetching groups' });
+  }
 }
 
 export async function joinGroupByCode(req, res) {
   const { inviteCode } = req.body;
 
-  if (!inviteCode) return returnError(req, res, 'Invitation Code is required');
+  if (!inviteCode) return res.status(400).send({ message: 'Invitation Code is required' });
 
   try {
-    let result;
-
-    result = await req.client.joinGroup(inviteCode);
-
-    returnSucess(res, inviteCode, result, 'The informed contact(s) entered the group successfully');
+    await req.client.joinGroup(inviteCode);
+    res.status(201).json({
+      status: 'success',
+      response: { message: 'The informed contact(s) entered the group successfully', contact: inviteCode },
+    });
   } catch (error) {
-    returnError(req, res, 'The informed contact(s) did not join the group successfully');
-  }
-}
-
-export async function getAllGroups(req, res) {
-  try {
-    let result;
-
-    result = await req.client.getAllGroups();
-
-    returnSucess(res, 'all-groups', result);
-  } catch (e) {
-    returnError(req, res, 'Error fetching groups');
+    req.logger.error(error);
+    res.status(500).json({ status: 'error', message: 'The informed contact(s) did not join the group successfully' });
   }
 }
 
@@ -69,23 +47,28 @@ export async function createGroup(req, res) {
   const { participants, name } = req.body;
 
   try {
-    let group;
-    let link;
+    let response = {};
     let infoGroup = [];
 
-    group = await req.client.createGroup(name, contactToArray(participants));
+    for (const group of groupNameToArray(name)) {
+      response = await req.client.createGroup(group, contactToArray(participants));
 
-    infoGroup.push({
-      id: group.gid.user,
-      name: name,
-      participants: group.participants.map((user) => {
-        return { user: Object.keys(user)[0] };
-      }),
+      infoGroup.push({
+        name: group,
+        id: response.gid.user,
+        participants: response.participants.map((user) => {
+          return { user: Object.keys(user)[0] };
+        }),
+      });
+    }
+
+    return res.status(201).json({
+      status: 'success',
+      response: { message: 'Group(s) created successfully', group: name, groupInfo: infoGroup },
     });
-
-    returnSucess(res, group.gid.user, infoGroup, 'Group(s) created successfully');
   } catch (e) {
-    returnError(req, res, 'Error creating group');
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error creating group(s)' });
   }
 }
 
@@ -126,13 +109,21 @@ export async function addParticipant(req, res) {
   const { groupId, phone } = req.body;
 
   try {
-    let response;
+    let response = {};
+    let arrayGroups = [];
 
-    response = await req.client.addParticipant(getGroupId(groupId), contactToArray(phone));
+    for (const group of groupToArray(groupId)) {
+      response = await req.client.addParticipant(group, contactToArray(phone));
+      arrayGroups.push(response);
+    }
 
-    returnSucess(res, groupId, response);
+    return res.status(201).json({
+      status: 'success',
+      response: { message: 'Participant(s) added successfully', participants: phone, groups: arrayGroups },
+    });
   } catch (e) {
-    returnError(req, res, 'Error adding participant(s)');
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error adding participant(s)' });
   }
 }
 
@@ -162,13 +153,19 @@ export async function promoteParticipant(req, res) {
   const { groupId, phone } = req.body;
 
   try {
-    let response;
+    let arrayGroups = [];
+    for (const group of groupToArray(groupId)) {
+      await req.client.promoteParticipant(group, contactToArray(phone));
+      arrayGroups.push(group);
+    }
 
-    response = await req.client.promoteParticipant(getGroupId(groupId), contactToArray(phone));
-
-    returnSucess(res, groupId, response);
+    return res.status(201).json({
+      status: 'success',
+      response: { message: 'Successful promoted participant(s)', participants: phone, groups: arrayGroups },
+    });
   } catch (e) {
-    returnError(req, res, 'Error promoting participant(s)');
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error promoting participant(s)' });
   }
 }
 
@@ -196,7 +193,7 @@ export async function getGroupAdmins(req, res) {
   const { groupId } = req.params;
 
   try {
-    let response;
+    let response = {};
     let arrayGroups = [];
 
     for (const group of groupToArray(groupId)) {
@@ -204,37 +201,45 @@ export async function getGroupAdmins(req, res) {
       arrayGroups.push(response);
     }
 
-    returnSucess(res, groupId, arrayGroups);
+    return res.status(200).json({ status: 'success', response: arrayGroups });
   } catch (e) {
-    returnError(req, res, 'Error retrieving group admin(s)');
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error retrieving group admin(s)' });
   }
 }
 
 export async function getGroupInviteLink(req, res) {
   const { groupId } = req.params;
-
   try {
-    let response;
+    let response = {};
+    for (const group of groupToArray(groupId)) {
+      response = await req.client.getGroupInviteLink(group);
+    }
 
-    response = await req.client.getGroupInviteLink(getGroupId(groupId));
-
-    returnSucess(res, groupId, response);
+    return res.status(200).json({ status: 'success', response: response });
   } catch (e) {
-    returnError(req, res, 'Error on get group invite link');
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error on get group invite link' });
   }
 }
 
 export async function revokeGroupInviteLink(req, res) {
   const { groupId } = req.params;
 
+  let response = {};
+
   try {
-    let response = {};
+    for (const group of groupToArray(groupId)) {
+      response = await req.client.revokeGroupInviteLink(group);
+    }
 
-    response = await req.client.revokeGroupInviteLink(getGroupId(groupId));
-
-    returnSucess(res, groupId, response);
+    return res.status(200).json({
+      status: 'Success',
+      response: response,
+    });
   } catch (e) {
-    returnError(req, res, 'Error on revoke group invite link');
+    req.logger.error(e);
+    return res.status(400).json('Error on revoke group invite link');
   }
 }
 
@@ -313,7 +318,9 @@ export async function setGroupSubject(req, res) {
   let response = {};
 
   try {
-      response = await req.client.setGroupSubject(getGroupId(groupId), title);
+    for (const group of groupToArray(groupId)) {
+      response = await req.client.setGroupSubject(group, title);
+    }
 
     return res.status(200).json({ status: 'success', response: response });
   } catch (e) {
@@ -343,33 +350,37 @@ export async function changePrivacyGroup(req, res) {
   const { groupId, status } = req.body;
 
   try {
-    let result;
     for (const group of contactToArray(groupId)) {
-      result = await req.client.setMessagesAdminsOnly(group, status === 'true');
+      await req.client.setMessagesAdminsOnly(group, status === 'true');
     }
 
-    returnSucess(res, groupId, result, 'Group privacy changed successfully');
+    return res.status(200).json({ status: 'success', response: { message: 'Group privacy changed successfully' } });
   } catch (e) {
-    returnError(req, res, 'Error changing group privacy');
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error changing group privacy' });
   }
 }
 
 export async function setGroupProfilePic(req, res) {
-  const { phone } = req.body;
+  const { phone, path } = req.body;
 
-  if (!req.file) return res.status(400).json({ status: 'error', message: 'File parameter is required!' });
+  if (!path && !req.file)
+    return res.status(401).send({
+      message: 'Sending the image is mandatory',
+    });
+
+  const pathFile = path || req.file.path;
 
   try {
-    const { path: pathFile } = req.file;
+    for (const contato of contactToArray(phone, true)) {
+      await req.client.setGroupIcon(contato, pathFile);
+    }
 
-    let result;
-
-    result = await req.client.setProfilePic(pathFile, phone);
-
-    await unlinkAsync(pathFile);
-
-    returnSucess(res, phone, result, 'Group profile photo successfully changed');
+    return res
+      .status(201)
+      .json({ status: 'success', response: { message: 'Group profile photo successfully changed' } });
   } catch (e) {
-    returnError(req, res, 'Error changing group photo');
+    req.logger.error(e);
+    return res.status(500).json({ status: 'error', message: 'Error changing group photo' });
   }
 }
