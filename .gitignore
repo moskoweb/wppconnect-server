@@ -17,3 +17,4 @@
 *.tgz
 /.idea
 userDataDir
+.DS_Store
