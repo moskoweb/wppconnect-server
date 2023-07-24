@@ -189,6 +189,7 @@ This server use config.ts file to define some options, default values are:
       '--ignore-certificate-errors',
       '--ignore-ssl-errors',
       '--ignore-certificate-errors-spki-list',
+      '--disable-features=LeakyPeeker' // Disable the browser's sleep mode when idle, preventing the browser from going into sleep mode, this is useful for WhatsApp not to be in economy mode in the background, avoiding possible crashes
     ],
   },
   mapper: {
@@ -210,6 +211,14 @@ This server use config.ts file to define some options, default values are:
     redisPassword: '',
     redisDb: 0,
     redisPrefix: 'docker',
+  },
+  // Your configurations yo upload on AWS
+  aws_s3: {
+    region: 'sa-east-1',
+    access_key_id: '',
+    secret_key: '',
+    // If you already have a bucket created that will be used. Will bestored: you-default-bucket/{session}/{filename}
+    defaultBucketName: ''
   },
 }
 ```
